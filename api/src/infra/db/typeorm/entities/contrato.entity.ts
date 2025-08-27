@@ -7,7 +7,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { Parcela } from '../parcela/parcela.entity';
+import { Parcela } from './parcela.entity';
 
 @Entity('contratos')
 @Unique(['contrato'])

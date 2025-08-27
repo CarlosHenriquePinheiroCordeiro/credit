@@ -1,0 +1,169 @@
+
+/* TEMA CLARO */
+:root {
+    --primary-lightest: #BCFBF7;
+    --primary-light:    #00856E;
+    --primary:          #006151; 
+    --primary-dark:     #004A3F;
+
+    --secondary-light:  #02E09F;
+    --secondary:        #01865F;
+    --secondary-dark:   #016F4F;
+
+    --white:            #FFFFFF;
+    --white-dark:       #F5F5F5;
+    --gray-light:       #DDDDDD;
+    --gray:             #CCCCCC;
+    --gray-dark:        #BBBBBB;
+    --gray-darkest:     #333333;
+
+    --bg-surface:       #F1F6F5;
+    --text-default:     #505050;
+
+    --info-lightest:    #EAF4FB;
+    --info:             #0066AB;
+    --info-dark:        #003D66;
+
+    --success-lightest: #E6FFF7;
+    --success-light:    #D7F4F0;
+    --success:          #006151;
+    --success-dark:     #004A3F;
+
+    --alert-lightest:   #FFF9E5;
+    --alert-light:      #FFE8CC;
+    --alert:            #F6AB35;
+    --alert-dark:       #734B0C;
+
+    --alert-alt-lightest:#FFFAE0;
+    --alert-alt-light:   #FEF5C8;
+    --alert-alt:         #FCD307;
+    --alert-alt-dark:    #5C4D00;
+
+    --danger-lightest:  #FFE5E6;
+    --danger:           #C91D1D;
+    --danger-dark:      #801212;
+
+    --background:       var(--bg-surface);
+    --foreground:       var(--text-default);
+
+    --card:             var(--white);
+    --card-foreground:  var(--text-default);
+
+    --popover:          var(--white);
+    --popover-foreground: var(--text-default);
+
+    --muted:            var(--white-dark);
+    --muted-foreground: #6B6B6B;
+
+    --accent:           var(--secondary-light);
+    --accent-foreground:#003128;
+
+    --border:           var(--gray-light);
+    --input:            var(--gray);
+    --ring:             var(--primary);
+
+    --primary-DEFAULT:  var(--primary);
+    --primary-foreground: #FFFFFF;
+
+    --secondary-DEFAULT: var(--secondary);
+    --secondary-foreground: #FFFFFF;
+
+    --destructive:      var(--danger);
+    --destructive-foreground: #FFFFFF;
+
+    --info-DEFAULT:     var(--info);
+    --info-foreground:  #FFFFFF;
+
+    --success-DEFAULT:  var(--success);
+    --success-foreground: #FFFFFF;
+
+    --warning-DEFAULT:  var(--alert);
+    --warning-foreground: #3A2A00;
+}
+
+/* TEMA ESCURO */
+.dark {
+
+    --primary-lightest: #9CEBE5;
+    --primary-light:    #00A788;
+    --primary:          #00816C;
+    --primary-dark:     #006457;
+
+    --secondary-light:  #31F0B7;
+    --secondary:        #01A47A;
+    --secondary-dark:   #018262;
+
+    --white:            #121212;
+    --white-dark:       #EDEDED;
+    --gray-light:       #4A4A4A;
+    --gray:             #3D3D3D;
+    --gray-dark:        #2F2F2F;
+    --gray-darkest:     #1C1C1C;
+
+    --bg-surface:       #121414;  
+    --text-default:     #EDEDED; 
+
+    --info-lightest:    #0E2B44;
+    --info:             #1C78C2;
+    --info-dark:        #0B4572;
+
+    --success-lightest: #0D2A27;
+    --success-light:    #0F3A35;
+    --success:          #00A78A;
+    --success-dark:     #007565;
+
+    --alert-lightest:   #2A2411;
+    --alert-light:      #3C2F12;
+    --alert:            #F6B23C;
+    --alert-dark:       #8C5A10;
+
+    --alert-alt-lightest:#2C2707;
+    --alert-alt-light:   #3A3209;
+    --alert-alt:         #FFD90A;
+    --alert-alt-dark:    #6A5B00;
+
+    --danger-lightest:  #3A1416;
+    --danger:           #E03434;
+    --danger-dark:      #A31616;
+
+    --background:       var(--bg-surface);
+    --foreground:       var(--text-default);
+
+    --card:             #161818;
+    --card-foreground:  var(--text-default);
+
+    --popover:          #161818;
+    --popover-foreground: var(--text-default);
+
+    --muted:            #1E2121;
+    --muted-foreground: #BDBDBD;
+
+    --accent:           var(--secondary);
+    --accent-foreground:#0C0C0C;
+
+    --border:           var(--gray);
+    --input:            var(--gray);
+    --ring:             var(--primary);
+
+    --primary-DEFAULT:  var(--primary);
+    --primary-foreground: #0D1A18;
+
+    --secondary-DEFAULT: var(--secondary);
+    --secondary-foreground: #0D1A18;
+
+    --destructive:      var(--danger);
+    --destructive-foreground: #0D0D0D;
+
+    --info-DEFAULT:     var(--info);
+    --info-foreground:  #0B1520;
+
+    --success-DEFAULT:  var(--success);
+    --success-foreground: #081312;
+
+    --warning-DEFAULT:  var(--alert);
+    --warning-foreground: #0E0B02;
+}
+  
+:root, .dark {
+    --radius: 0.75rem;
+}
