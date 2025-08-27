@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,6 +12,7 @@ import {
   Paginated,
   Pagination,
 } from 'src/domain/contrato/contrato.repository';
+import { Parcela } from '../entities/parcela.entity';
 
 @Injectable()
 export class ContratoTypeOrmRepository implements IContratoRepository {
@@ -23,53 +25,83 @@ export class ContratoTypeOrmRepository implements IContratoRepository {
     filter: ListContratosFilter,
     pagination: Pagination,
   ): Promise<Paginated<Contrato>> {
-    const qb = this.repo.createQueryBuilder('c');
+    const queryBuilder = this.repo.createQueryBuilder('contratos');
 
     if (filter.contratoLike) {
-      qb.andWhere('c.contrato ILIKE :contrato', {
+      queryBuilder.andWhere('contratos.contrato ILIKE :contrato', {
         contrato: `%${filter.contratoLike}%`,
       });
     }
-    if (filter.dataFrom) {
-      qb.andWhere('c.data >= :dataFrom', { dataFrom: filter.dataFrom });
-    }
-    if (filter.dataTo) {
-      qb.andWhere('c.data <= :dataTo', { dataTo: filter.dataTo });
-    }
-    if (filter.minValorTotal !== undefined) {
-      qb.andWhere('c.valortotal >= :minVal', { minVal: filter.minValorTotal });
-    }
-    if (filter.maxValorTotal !== undefined) {
-      qb.andWhere('c.valortotal <= :maxVal', { maxVal: filter.maxValorTotal });
-    }
-    if (filter.hasEntrada === true) qb.andWhere('c.valorentrada > 0');
-    if (filter.hasEntrada === false) qb.andWhere('c.valorentrada = 0');
+    if (filter.dataFrom)
+      queryBuilder.andWhere('contratos.data >= :dataFrom', {
+        dataFrom: filter.dataFrom,
+      });
+    if (filter.dataTo)
+      queryBuilder.andWhere('contratos.data <= :dataTo', {
+        dataTo: filter.dataTo,
+      });
+    if (filter.minValorTotal !== undefined)
+      queryBuilder.andWhere('contratos.valortotal >= :minVal', {
+        minVal: filter.minValorTotal,
+      });
+    if (filter.maxValorTotal !== undefined)
+      queryBuilder.andWhere('contratos.valortotal <= :maxVal', {
+        maxVal: filter.maxValorTotal,
+      });
+    if (filter.hasEntrada === true)
+      queryBuilder.andWhere('contratos.valorentrada > 0');
+    if (filter.hasEntrada === false)
+      queryBuilder.andWhere('contratos.valorentrada = 0');
+
+    const agg = queryBuilder
+      .subQuery()
+      .select('p.contratoId', 'contratoid')
+      .addSelect('COUNT(*)::int', 'qtdparcelas')
+      .addSelect('COALESCE(SUM(p.totalpago), 0)', 'totalpago')
+      .from(Parcela, 'p')
+      .groupBy('p.contratoId')
+      .getQuery();
+
+    queryBuilder
+      .leftJoin(`(${agg})`, 'agg', 'agg.contratoid = contratos.contrato')
+      .addSelect('agg.qtdparcelas', 'qtdparcelas')
+      .addSelect('agg.totalpago', 'totalpago');
 
     const sortColumn = (() => {
       switch (pagination.sort) {
         case 'contrato':
-          return 'c.contrato';
+          return 'contratos.contrato';
         case 'valortotal':
-          return 'c.valortotal';
+          return 'contratos.valortotal';
         case 'valorentrada':
-          return 'c.valorentrada';
+          return 'contratos.valorentrada';
         case 'valorfinanciado':
-          return 'c.valorfinanciado';
+          return 'contratos.valorfinanciado';
         case 'data':
         default:
-          return 'c.data';
+          return 'contratos.data';
       }
     })();
-
-    qb.orderBy(sortColumn, pagination.order ?? 'DESC');
+    queryBuilder.orderBy(sortColumn, pagination.order ?? 'DESC');
 
     const page = Math.max(1, pagination.page);
     const limit = Math.min(100, Math.max(1, pagination.limit));
-    qb.skip((page - 1) * limit).take(limit);
+    queryBuilder.skip((page - 1) * limit).take(limit);
 
-    const [rows, total] = await qb.getManyAndCount();
-    const items = rows.map(ContratoMapper.toDomain);
+    const total = await queryBuilder
+      .clone()
+      .skip(undefined)
+      .take(undefined)
+      .getCount();
 
+    const { entities, raw } = await queryBuilder.getRawAndEntities();
+
+    entities.forEach((e, i) => {
+      e.qtdParcelas = Number(raw[i]['qtdparcelas'] ?? 0);
+      e.totalPago = Number(raw[i]['totalpago'] ?? 0);
+    });
+
+    const items = entities.map(ContratoMapper.toDomain);
     return { items, total, page, limit };
   }
 }

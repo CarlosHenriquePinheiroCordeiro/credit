@@ -2,9 +2,10 @@ import React from 'react'
 import { useQuery, keepPreviousData } from '@tanstack/react-query'
 import { ContractsToolbar } from './ContratosToolbar'
 import { ContractsTable } from './ContratosTable'
-import { fetchContratos } from '@/api/contratos'
+import { Contrato, fetchContratos, ListResponse } from '@/api/contratos'
 import type { ListContratosQuery, SortKey, Order } from '@/api/client'
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import ParcelasModal from '../parcelas/ParcelasModal'
 
 export default function ContratosListPage({ endpoint = '/contratos' }: { endpoint?: string }) {
   const [query, setQuery] = React.useState('')
@@ -12,6 +13,8 @@ export default function ContratosListPage({ endpoint = '/contratos' }: { endpoin
   const [limit, setLimit] = React.useState(10)
   const [sort, setSort] = React.useState<SortKey>('data')
   const [order, setOrder] = React.useState<Order>('DESC')
+  const [showParcelas, setShowParcelas] = React.useState(false)
+  const [selectedContratoId, setSelectedContratoId] = React.useState<string | null>(null)
 
   const params: ListContratosQuery = {
     contratoLike: query || undefined,
@@ -41,7 +44,8 @@ export default function ContratosListPage({ endpoint = '/contratos' }: { endpoin
   }
 
   const onDetail = (c: Contrato) => {
-    alert(`Detalhar parcelas do contrato ${c.contrato} (em breve)`) 
+    setSelectedContratoId(c.contrato)
+    setShowParcelas(true)
   }
 
   const totalPages = Math.max(1, Math.ceil((total ?? 0) / (limit || 10)))
@@ -81,14 +85,17 @@ export default function ContratosListPage({ endpoint = '/contratos' }: { endpoin
 
         <ContractsTable
           data={contratos}
-          total={total}
-          page={page}
-          limit={limit}
-          loading={isFetching}
           sort={sort}
           order={order}
           onChangeSort={onChangeSort}
           onDetail={onDetail}
+        />
+
+        <ParcelasModal
+          open={showParcelas}
+          onOpenChange={setShowParcelas}
+          contratoId={selectedContratoId}
+          endpoint="/parcelas"
         />
 
       </div>

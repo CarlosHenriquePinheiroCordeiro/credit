@@ -12,31 +12,20 @@ const fmtDate = (s?: string) => (s ? new Date(s + (s.endsWith('Z') ? '' : 'T00:0
 
 export function ContractsTable({
   data,
-  total,
-  page,
-  limit,
-  loading,
   sort,
   order,
   onChangeSort,
   onDetail,
 }: {
   data: Contrato[]
-  total: number
-  page: number
-  limit: number
   loading?: boolean
   sort?: SortKey
   order?: Order
   onChangeSort: (key: SortKey) => void
   onDetail: (c: Contrato) => void
 }) {
-  const totalPages = Math.max(1, Math.ceil((total ?? 0) / (limit || 10)))
 
-  // Desktop
   const rows = data.map((c) => {
-    const totalParcelas = c.parcelas?.length ?? 0
-    const totalPago = (c.parcelas || []).reduce((acc, p) => acc + (p.totalpago ?? 0), 0)
     return (
       <TableRow key={c.contrato} className="hover:bg-muted/50">
         <TableCell className="font-medium">{c.contrato}</TableCell>
@@ -44,8 +33,8 @@ export function ContractsTable({
         <TableCell className="text-right">{fmtBRL(c.valortotal)}</TableCell>
         <TableCell className="text-right">{fmtBRL(c.valorentrada)}</TableCell>
         <TableCell className="text-right">{fmtBRL(c.valorfinanciado ?? (c.valortotal - (c.valorentrada ?? 0)))}</TableCell>
-        <TableCell className="text-center">{totalParcelas}</TableCell>
-        <TableCell className="text-right">{fmtBRL(totalPago)}</TableCell>
+        <TableCell className="text-center">{c.qtdParcelas}</TableCell>
+        <TableCell className="text-right">{fmtBRL(c.totalPago)}</TableCell>
         <TableCell className="text-right">
           <Button size="sm" onClick={() => onDetail(c)}>
             <Eye className="h-4 w-4 mr-1" /> Detalhar parcelas
@@ -77,7 +66,7 @@ export function ContractsTable({
                 <TableHead className="text-right">
                   <SortHeader label="Financiado" active={sort === 'valorfinanciado'} order={order} onSort={() => onChangeSort('valorfinanciado')} />
                 </TableHead>
-                <TableHead className="text-center"># Parcelas</TableHead>
+                <TableHead className="text-center">Parcelas</TableHead>
                 <TableHead className="text-right">Total pago</TableHead>
                 <TableHead className="text-right">Ações</TableHead>
               </TableRow>
@@ -88,8 +77,6 @@ export function ContractsTable({
 
         <div className="grid md:hidden gap-3">
           {data.map((c) => {
-            const totalParcelas = c.parcelas?.length ?? 0
-            const totalPago = (c.parcelas || []).reduce((acc, p) => acc + (p.totalpago ?? 0), 0)
             return (
               <Card key={c.contrato} className="rounded-2xl">
                 <CardHeader className="pb-2">
@@ -110,9 +97,9 @@ export function ContractsTable({
                   <span className="opacity-60">Financiado</span>
                   <span className="text-right">{fmtBRL(c.valorfinanciado ?? (c.valortotal - (c.valorentrada ?? 0)))}</span>
                   <span className="opacity-60">Parcelas</span>
-                  <span className="text-right">{totalParcelas}</span>
+                  <span className="text-right">{c.qtdParcelas}</span>
                   <span className="opacity-60">Total pago</span>
-                  <span className="text-right">{fmtBRL(totalPago)}</span>
+                  <span className="text-right">{fmtBRL(c.totalPago)}</span>
                 </CardContent>
               </Card>
             )
