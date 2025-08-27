@@ -6,6 +6,8 @@ export type Contrato = {
   valortotal: number
   valorentrada?: number
   valorfinanciado?: number
+  qtdParcelas?: number
+  totalPago?: number
 }
 
 export type ListResponse<T> = {

@@ -11,6 +11,8 @@ export class ContratoMapper {
       e.valorfinanciado,
       e.createdAt,
       e.updatedAt,
+      e.qtdParcelas,
+      e.totalPago,
     );
   }
 }

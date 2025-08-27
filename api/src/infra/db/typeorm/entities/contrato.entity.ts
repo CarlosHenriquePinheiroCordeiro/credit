@@ -47,4 +47,8 @@ export class Contrato {
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
+
+  qtdParcelas?: number;
+
+  totalPago?: number;
 }

@@ -8,6 +8,8 @@ export type ContratoHttp = {
   valorfinanciado: number;
   createdAt: string;
   updatedAt: string;
+  qtdParcelas?: number;
+  totalPago?: number;
 };
 
 export function presentContrato(c: Contrato): ContratoHttp {
@@ -19,5 +21,7 @@ export function presentContrato(c: Contrato): ContratoHttp {
     valorfinanciado: c.valorfinanciado,
     createdAt: c.createdAt.toISOString(),
     updatedAt: c.updatedAt.toISOString(),
+    qtdParcelas: c.qtdParcelas,
+    totalPago: c.totalPago
   };
 }
