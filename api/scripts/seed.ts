@@ -2,9 +2,9 @@
 import 'reflect-metadata';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import dataSource from '../src/db/data-source';
-import { Contrato } from '../src/contrato/contrato.entity';
-import { Parcela } from '../src/parcela/parcela.entity';
+import dataSource from '../src/infra/db/typeorm/data-source';
+import { Contrato } from '../src/infra/db/typeorm/entities/contrato.entity';
+import { Parcela } from '../src/infra/db/typeorm/entities/parcela.entity';
 
 type ParcelaJSON = {
   valorvencimento: number;
@@ -29,7 +29,11 @@ const toDate = (d?: string | null) => (d ? new Date(d + 'T00:00:00Z') : null);
 const toNum = (v: number | string) => (typeof v === 'number' ? v : Number(v));
 
 async function main() {
-  const defaultPath = path.join(process.cwd(), 'src/db/seed', 'historico.json');
+  const defaultPath = path.join(
+    process.cwd(),
+    'src/infra/db/seed',
+    'historico.json',
+  );
   const file = process.env.SEED_FILE || defaultPath;
 
   console.log(`[seed] lendo: ${file}`);
@@ -54,7 +58,7 @@ async function main() {
       ['contrato'],
     );
 
-    const saved = await contratoRepo.findOneByOrFail({ contrato: c.contrato })
+    const saved = await contratoRepo.findOneByOrFail({ contrato: c.contrato });
 
     if (c.parcelas?.length) {
       const rows = c.parcelas.map((p) => ({
@@ -86,4 +90,4 @@ async function main() {
 main().catch(async (e) => {
   console.error('[seed] erro:', e);
   process.exit(1);
-})
+});

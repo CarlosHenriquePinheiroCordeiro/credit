@@ -8,7 +8,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { Contrato } from '../contrato/contrato.entity';
+import { Contrato } from './contrato.entity';
 
 @Entity('parcelas')
 @Unique(['contratoId', 'datavencimento'])
