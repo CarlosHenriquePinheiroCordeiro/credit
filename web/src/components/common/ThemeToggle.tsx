@@ -1,6 +1,6 @@
-import React from "react"
-import { useTheme } from "@/theme/ThemeProvider"
-import { Button } from "../ui/button"
+import React from 'react'
+import { useTheme } from '@/theme/ThemeProvider'
+import { Button } from '../ui/button'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -9,8 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-} from "../ui/dropdown-menu"
-import { Sun, Moon, Monitor } from "lucide-react"
+} from '../ui/dropdown-menu'
+import { Sun, Moon, Monitor } from 'lucide-react'
 
 export default function ThemeToggle() {
   const { mode, setMode, isDark } = useTheme()
@@ -25,7 +25,7 @@ export default function ThemeToggle() {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Tema</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={mode} onValueChange={(v: any) => setMode(v)}>
+        <DropdownMenuRadioGroup value={mode} onValueChange={(v: unknown) => setMode(v)}>
           <DropdownMenuRadioItem value="light">
             <Sun className="mr-2 h-4 w-4" /> Claro
           </DropdownMenuRadioItem>

@@ -1,4 +1,3 @@
-// src/application/contrato/get-endividamento-total.usecase.ts
 import { Inject, Injectable } from '@nestjs/common';
 import { PARCELA_REPOSITORY } from '../../domain/parcela/parcela.repository';
 import type { IParcelaRepository } from '../../domain/parcela/parcela.repository';

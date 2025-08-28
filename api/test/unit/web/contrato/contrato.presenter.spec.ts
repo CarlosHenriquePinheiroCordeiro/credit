@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-
 import { presentContrato } from '../../../../src/web/contrato/contrato.presenter';
 
 describe('presentContrato', () => {

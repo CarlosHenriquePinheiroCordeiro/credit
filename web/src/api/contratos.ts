@@ -1,4 +1,4 @@
-import { api, toQueryString, type ListContratosQuery } from './client'
+import { api, toQueryString, urlApi, type ListContratosQuery } from './client'
 
 export type Contrato = {
   contrato: string
@@ -19,23 +19,23 @@ export type ListResponse<T> = {
 
 export async function fetchContratos(query: ListContratosQuery, endpoint = '/contratos') {
   const qs = toQueryString(query)
-  const url = `http://localhost:3000/api${endpoint}?${qs}`
+  const url = `${urlApi}${endpoint}?${qs}`
   const { data } = await api.get<ListResponse<Contrato>>(url)
   return data
 }
 
-export async function postMaiorValorAberto(file: File, endpoint = "/maximo-aberto") {
-  const url = `http://localhost:3000/api${endpoint}`
+export async function postMaiorValorAberto(file: File, endpoint = '/maximo-aberto') {
+  const url = `${urlApi}${endpoint}`
   const form = new FormData()
-  form.append("file", file)
+  form.append('file', file)
   const { data } = await api.post<{ mes: string; total_aberto: number }>(url, form, {
-    headers: { "Content-Type": "multipart/form-data" },
+    headers: { 'Content-Type': 'multipart/form-data' },
   })
   return data
 }
 
-export async function fetchDividaTotal(endpoint = "/contratos/endividamento-total") {
-  const url = `http://localhost:3000/api${endpoint}`
+export async function fetchDividaTotal(endpoint = '/contratos/endividamento-total') {
+  const url = `${urlApi}${endpoint}`
   const { data } = await api.get<{ endividamento_total: number }>(url)
   return data
 }

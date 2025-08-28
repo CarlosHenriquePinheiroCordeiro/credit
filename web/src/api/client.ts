@@ -1,7 +1,3 @@
-// =============================================================
-// File: src/api/client.ts
-// Axios client + helper to build query strings
-// =============================================================
 import axios from 'axios'
 
 export const api = axios.create({
@@ -17,14 +13,14 @@ export type ListContratosQuery = {
   dataTo?: string
   minValorTotal?: string
   maxValorTotal?: string
-  hasEntrada?: string // 'true' | 'false'
+  hasEntrada?: string
   page?: number
   limit?: number
   sort?: SortKey
   order?: Order
 }
 
-export function toQueryString(params: Record<string, any>) {
+export function toQueryString(params: Record<string, unknown>) {
   const q = new URLSearchParams()
   Object.entries(params).forEach(([k, v]) => {
     if (v === undefined || v === null || v === '') return
@@ -32,3 +28,5 @@ export function toQueryString(params: Record<string, any>) {
   })
   return q.toString()
 }
+
+export const urlApi = `${import.meta.env.VITE_API_BASE_URL}`

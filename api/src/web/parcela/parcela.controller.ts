@@ -1,17 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Controller, Get, Query } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ListParcelasQueryDto } from './parcela.dto';
 import { ListParcelasUseCase } from '../../application/parcela/list-parcelas.usecase';
 import { presentParcela } from './parcela.presenter';
+import {
+  PaginatedParcelasDto,
+  ParcelaHttpDto,
+} from './parcela.presenter.swagger';
 
+@ApiTags('Parcelas')
 @Controller('parcelas')
 export class ParcelasController {
   constructor(private readonly listParcelas: ListParcelasUseCase) {}
 
   @Get()
-  async list(@Query() q: ListParcelasQueryDto) {
+  @ApiOkResponse({ type: PaginatedParcelasDto })
+  async list(@Query() q: ListParcelasQueryDto): Promise<PaginatedParcelasDto> {
     const output = await this.listParcelas.execute({
       contratoId: q.contratoId,
       vencFrom: q.vencFrom ? new Date(q.vencFrom) : undefined,
@@ -29,7 +33,7 @@ export class ParcelasController {
     });
 
     return {
-      items: output.items.map(presentParcela),
+      items: output.items.map(presentParcela) as unknown as ParcelaHttpDto[],
       total: output.total,
       page: output.page,
       limit: output.limit,

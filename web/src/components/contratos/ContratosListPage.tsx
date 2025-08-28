@@ -4,9 +4,8 @@ import { ContractsToolbar } from './ContratosToolbar'
 import { ContractsTable } from './ContratosTable'
 import { Contrato, fetchContratos, ListResponse } from '@/api/contratos'
 import type { ListContratosQuery, SortKey, Order } from '@/api/client'
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import ParcelasModal from '../parcelas/ParcelasModal'
-
 
 export default function ContratosListPage({ endpoint = '/contratos' }: { endpoint?: string }) {
   const [query, setQuery] = React.useState('')
@@ -53,13 +52,18 @@ export default function ContratosListPage({ endpoint = '/contratos' }: { endpoin
 
   return (
     <div className="container mx-auto p-4 md:p-6 text-card-foreground">
-
       <div className="space-y-4">
         <ContractsToolbar
           query={query}
-          setQuery={(v) => { setQuery(v); setPage(1) }}
+          setQuery={(v) => {
+            setQuery(v)
+            setPage(1)
+          }}
           pageSize={limit}
-          setPageSize={(n) => { setLimit(n); setPage(1) }}
+          setPageSize={(n) => {
+            setLimit(n)
+            setPage(1)
+          }}
           onRefresh={() => refetch()}
         />
 
@@ -72,12 +76,14 @@ export default function ContratosListPage({ endpoint = '/contratos' }: { endpoin
             <ChevronLeft className="h-4 w-4" />
             Anterior
           </button>
-          <span className="text-sm opacity-70">Página {page} de {totalPages} - {`${total ?? 0} contrato(s)`}</span>
-          
+          <span className="text-sm opacity-70">
+            Página {page} de {totalPages} - {`${total ?? 0} contrato(s)`}
+          </span>
+
           <button
             className="flex items-center gap-1 text-sm underline disabled:opacity-50"
             onClick={() => setPage((p) => p + 1)}
-            disabled={isFetching || (page * limit >= total)}
+            disabled={isFetching || page * limit >= total}
           >
             Próxima
             <ChevronRight className="h-4 w-4" />
@@ -98,7 +104,6 @@ export default function ContratosListPage({ endpoint = '/contratos' }: { endpoin
           contratoId={selectedContratoId}
           endpoint="/parcelas"
         />
-
       </div>
     </div>
   )

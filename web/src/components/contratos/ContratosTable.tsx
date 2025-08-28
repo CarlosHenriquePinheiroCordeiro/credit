@@ -1,6 +1,13 @@
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { Search, Eye } from 'lucide-react'
 import { SortHeader } from './SortHeader'
@@ -24,11 +31,10 @@ export function ContractsTable({
   onChangeSort: (key: SortKey) => void
   onDetail: (c: Contrato) => void
 }) {
-
   const [showMaiorValor, setShowMaiorValor] = React.useState(false)
   const [dividaTotal, setDividaTotal] = React.useState<number | null>(null)
   const dividaMutation = useMutation({
-    mutationFn: () => fetchDividaTotal("/contratos/endividamento-total"),
+    mutationFn: () => fetchDividaTotal('/contratos/endividamento-total'),
     onSuccess: ({ endividamento_total }) => setDividaTotal(endividamento_total),
   })
 
@@ -39,7 +45,9 @@ export function ContractsTable({
         <TableCell>{formatToDate(c.data)}</TableCell>
         <TableCell className="text-right">{formatToBRL(c.valortotal)}</TableCell>
         <TableCell className="text-right">{formatToBRL(c.valorentrada)}</TableCell>
-        <TableCell className="text-right">{formatToBRL(c.valorfinanciado ?? (c.valortotal - (c.valorentrada ?? 0)))}</TableCell>
+        <TableCell className="text-right">
+          {formatToBRL(c.valorfinanciado ?? c.valortotal - (c.valorentrada ?? 0))}
+        </TableCell>
         <TableCell className="text-center">{c.qtdParcelas}</TableCell>
         <TableCell className="text-right">{formatToBRL(c.totalPago)}</TableCell>
         <TableCell className="text-right">
@@ -54,8 +62,11 @@ export function ContractsTable({
   return (
     <Card className="rounded-2xl">
       <CardContent className="space-y-4 pt-6">
-      <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={() => setShowMaiorValor(true)} className="inline-flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-3">
+          <Button
+            onClick={() => setShowMaiorValor(true)}
+            className="inline-flex items-center gap-2"
+          >
             <Search className="h-4 w-4" />
             Período de Maior Valor Aberto
           </Button>
@@ -67,39 +78,63 @@ export function ContractsTable({
               className="inline-flex items-center gap-2"
             >
               <Search className="h-4 w-4" />
-              Dívida Total: 
+              Dívida Total:
             </Button>
 
             {dividaTotal !== null && (
               <span className="text-sm font-medium">
-                {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(dividaTotal)}
+                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(
+                  dividaTotal,
+                )}
               </span>
             )}
           </div>
         </div>
 
-        <MaiorValorAbertoModal
-          open={showMaiorValor}
-          onOpenChange={setShowMaiorValor}
-        />
+        <MaiorValorAbertoModal open={showMaiorValor} onOpenChange={setShowMaiorValor} />
         <div className="hidden md:block">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>
-                  <SortHeader label="Contrato" active={sort === 'contrato'} order={order} onSort={() => onChangeSort('contrato')} />
+                  <SortHeader
+                    label="Contrato"
+                    active={sort === 'contrato'}
+                    order={order}
+                    onSort={() => onChangeSort('contrato')}
+                  />
                 </TableHead>
                 <TableHead>
-                  <SortHeader label="Data" active={sort === 'data'} order={order} onSort={() => onChangeSort('data')} />
+                  <SortHeader
+                    label="Data"
+                    active={sort === 'data'}
+                    order={order}
+                    onSort={() => onChangeSort('data')}
+                  />
                 </TableHead>
                 <TableHead className="text-right">
-                  <SortHeader label="Valor total" active={sort === 'valortotal'} order={order} onSort={() => onChangeSort('valortotal')} />
+                  <SortHeader
+                    label="Valor total"
+                    active={sort === 'valortotal'}
+                    order={order}
+                    onSort={() => onChangeSort('valortotal')}
+                  />
                 </TableHead>
                 <TableHead className="text-right">
-                  <SortHeader label="Entrada" active={sort === 'valorentrada'} order={order} onSort={() => onChangeSort('valorentrada')} />
+                  <SortHeader
+                    label="Entrada"
+                    active={sort === 'valorentrada'}
+                    order={order}
+                    onSort={() => onChangeSort('valorentrada')}
+                  />
                 </TableHead>
                 <TableHead className="text-right">
-                  <SortHeader label="Financiado" active={sort === 'valorfinanciado'} order={order} onSort={() => onChangeSort('valorfinanciado')} />
+                  <SortHeader
+                    label="Financiado"
+                    active={sort === 'valorfinanciado'}
+                    order={order}
+                    onSort={() => onChangeSort('valorfinanciado')}
+                  />
                 </TableHead>
                 <TableHead className="text-center">Parcelas</TableHead>
                 <TableHead className="text-right">Total pago</TableHead>
@@ -130,7 +165,9 @@ export function ContractsTable({
                   <span className="opacity-60">Entrada</span>
                   <span className="text-right">{formatToBRL(c.valorentrada)}</span>
                   <span className="opacity-60">Financiado</span>
-                  <span className="text-right">{formatToBRL(c.valorfinanciado ?? (c.valortotal - (c.valorentrada ?? 0)))}</span>
+                  <span className="text-right">
+                    {formatToBRL(c.valorfinanciado ?? c.valortotal - (c.valorentrada ?? 0))}
+                  </span>
                   <span className="opacity-60">Parcelas</span>
                   <span className="text-right">{c.qtdParcelas}</span>
                   <span className="opacity-60">Total pago</span>
