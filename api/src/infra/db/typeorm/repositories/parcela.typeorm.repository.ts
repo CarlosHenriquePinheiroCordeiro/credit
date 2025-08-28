@@ -1,6 +1,3 @@
-// src/infra/db/typeorm/repositories/parcela.typeorm.repository.ts
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -30,8 +27,10 @@ export class ParcelaTypeOrmRepository implements IParcelaRepository {
 
     qb.where('p.contratoId = :contratoId', { contratoId: filter.contratoId });
 
-    if (filter.vencFrom) qb.andWhere('p.datavencimento >= :vFrom', { vFrom: filter.vencFrom });
-    if (filter.vencTo) qb.andWhere('p.datavencimento <= :vTo', { vTo: filter.vencTo });
+    if (filter.vencFrom)
+      qb.andWhere('p.datavencimento >= :vFrom', { vFrom: filter.vencFrom });
+    if (filter.vencTo)
+      qb.andWhere('p.datavencimento <= :vTo', { vTo: filter.vencTo });
 
     if (filter.hasPayment === true) qb.andWhere('p.totalpago > 0');
     if (filter.hasPayment === false) qb.andWhere('p.totalpago = 0');

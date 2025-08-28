@@ -1,7 +1,13 @@
 import React from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Search, RefreshCcw } from 'lucide-react'
 
 export type ToolbarProps = {
@@ -12,7 +18,13 @@ export type ToolbarProps = {
   onRefresh: () => void
 }
 
-export function ContractsToolbar({ query, setQuery, pageSize, setPageSize, onRefresh }: ToolbarProps) {
+export function ContractsToolbar({
+  query,
+  setQuery,
+  pageSize,
+  setPageSize,
+  onRefresh,
+}: ToolbarProps) {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
       <div className="flex items-center gap-2 w-full md:w-1/2">

@@ -1,4 +1,4 @@
-import { api, toQueryString } from "../api/client"
+import { api, toQueryString } from '../api/client'
 
 export type Parcela = {
   datavencimento: string
@@ -16,13 +16,13 @@ export type ListResponse<T> = {
   total: number
 }
 
-export type Order = "ASC" | "DESC"
+export type Order = 'ASC' | 'DESC'
 export type SortKeyParcela =
-  | "datavencimento"
-  | "valorvencimento"
-  | "totalpago"
-  | "capitalaberto"
-  | "createdAt"
+  | 'datavencimento'
+  | 'valorvencimento'
+  | 'totalpago'
+  | 'capitalaberto'
+  | 'createdAt'
 
 export type ListParcelasQuery = {
   contratoId: string
@@ -36,8 +36,8 @@ export type ListParcelasQuery = {
   order?: Order
 }
 
-export async function fetchParcelas(query: ListParcelasQuery, endpoint = "/parcelas") {
-  const qs = toQueryString(query as Record<string, any>)
+export async function fetchParcelas(query: ListParcelasQuery, endpoint = '/parcelas') {
+  const qs = toQueryString(query as Record<string, unknown>)
   const url = `http://localhost:3000/api${endpoint}?${qs}`
   const { data } = await api.get<ListResponse<Parcela>>(url)
   return data

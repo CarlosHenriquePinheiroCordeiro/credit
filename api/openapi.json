@@ -1,0 +1,499 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/contratos": {
+      "get": {
+        "operationId": "ContratoController_list",
+        "parameters": [
+          {
+            "name": "contratoLike",
+            "required": false,
+            "in": "query",
+            "description": "Filtro por parte do identificador do contrato",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dataFrom",
+            "required": false,
+            "in": "query",
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "name": "dataTo",
+            "required": false,
+            "in": "query",
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "name": "minValorTotal",
+            "required": false,
+            "in": "query",
+            "description": "Número em string. Use ponto como separador decimal.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maxValorTotal",
+            "required": false,
+            "in": "query",
+            "description": "Número em string. Use ponto como separador decimal.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hasEntrada",
+            "required": false,
+            "in": "query",
+            "description": "String booleana",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 20,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "data",
+                "contrato",
+                "valortotal",
+                "valorentrada",
+                "valorfinanciado"
+              ]
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedContratosDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Contratos"
+        ]
+      }
+    },
+    "/contratos/endividamento-total": {
+      "get": {
+        "operationId": "ContratoController_endividamentoTotal",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "endividamento_total": {
+                      "type": "number",
+                      "example": 2545.14
+                    }
+                  },
+                  "required": [
+                    "endividamento_total"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Contratos"
+        ]
+      }
+    },
+    "/parcelas": {
+      "get": {
+        "operationId": "ParcelasController_list",
+        "parameters": [
+          {
+            "name": "contratoId",
+            "required": true,
+            "in": "query",
+            "description": "Identificador do contrato (obrigatório)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vencFrom",
+            "required": false,
+            "in": "query",
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "name": "vencTo",
+            "required": false,
+            "in": "query",
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "name": "hasPayment",
+            "required": false,
+            "in": "query",
+            "description": "String booleana",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            }
+          },
+          {
+            "name": "hasOpenCapital",
+            "required": false,
+            "in": "query",
+            "description": "String booleana",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 20,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "datavencimento",
+                "valorvencimento",
+                "totalpago",
+                "capitalaberto",
+                "createdAt"
+              ]
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedParcelasDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Parcelas"
+        ]
+      }
+    },
+    "/maximo-aberto": {
+      "post": {
+        "operationId": "MaximoAbertoController_upload",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaximoAbertoResponseDtoSwagger"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Máximo em Aberto"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "MyCred API",
+    "description": "Contratos, Parcelas e Máximo em Aberto",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "ContratoHttpDto": {
+        "type": "object",
+        "properties": {
+          "contrato": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string",
+            "format": "date",
+            "example": "2025-04-15"
+          },
+          "valortotal": {
+            "type": "number"
+          },
+          "valorentrada": {
+            "type": "number"
+          },
+          "valorfinanciado": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "qtdParcelas": {
+            "type": "number"
+          },
+          "totalPago": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "contrato",
+          "data",
+          "valortotal",
+          "valorentrada",
+          "valorfinanciado",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "PaginatedContratosDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContratoHttpDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "limit": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "limit"
+        ]
+      },
+      "ParcelaHttpDto": {
+        "type": "object",
+        "properties": {
+          "contratoId": {
+            "type": "string"
+          },
+          "datavencimento": {
+            "type": "string",
+            "format": "date"
+          },
+          "valorvencimento": {
+            "type": "number"
+          },
+          "dataultimopagamento": {
+            "type": "object",
+            "format": "date",
+            "nullable": true
+          },
+          "totalpago": {
+            "type": "number"
+          },
+          "capitalaberto": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "contratoId",
+          "datavencimento",
+          "valorvencimento",
+          "dataultimopagamento",
+          "totalpago",
+          "capitalaberto",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "PaginatedParcelasDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ParcelaHttpDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "limit": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "limit"
+        ]
+      },
+      "MaximoAbertoResponseDtoSwagger": {
+        "type": "object",
+        "properties": {
+          "mes": {
+            "type": "string",
+            "example": "04/2023",
+            "description": "MM/YYYY"
+          },
+          "total_aberto": {
+            "type": "number",
+            "example": 2545.14
+          }
+        },
+        "required": [
+          "mes",
+          "total_aberto"
+        ]
+      }
+    }
+  }
+}

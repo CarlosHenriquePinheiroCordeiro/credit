@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { Test } from '@nestjs/testing';
 import { ListParcelasUseCase } from '../../../../src/application/parcela/list-parcelas.usecase';
 import { ParcelasController } from '../../../../src/web/parcela/parcela.controller';

@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Ubuntu", "ui-sans-serif", "system-ui"],
+        sans: ['Ubuntu', 'ui-sans-serif', 'system-ui'],
       },
       borderRadius: {
         lg: 'var(--radius)',

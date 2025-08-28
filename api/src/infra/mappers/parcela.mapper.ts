@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Parcela as ParcelaEntity } from '../db/typeorm/entities/parcela.entity';
-import { Parcela } from 'src/domain/parcela/parcela.domain';
+import { Parcela } from '../../../src/domain/parcela/parcela.domain';
 
 export class ParcelaMapper {
   static toDomain(e: ParcelaEntity): Parcela {

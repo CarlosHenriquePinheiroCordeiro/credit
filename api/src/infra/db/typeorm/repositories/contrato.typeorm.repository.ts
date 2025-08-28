@@ -3,15 +3,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Contrato } from 'src/domain/contrato/contrato.domain';
+import { Contrato } from '../../../../../src/domain/contrato/contrato.domain';
 import { Contrato as ContratoEntity } from '../entities/contrato.entity';
-import { ContratoMapper } from 'src/infra/mappers/contrato.mapper';
+import { ContratoMapper } from '../../../../../src/infra/mappers/contrato.mapper';
 import {
   IContratoRepository,
   ListContratosFilter,
   Paginated,
   Pagination,
-} from 'src/domain/contrato/contrato.repository';
+} from '../../../../../src/domain/contrato/contrato.repository';
 import { Parcela } from '../entities/parcela.entity';
 
 @Injectable()

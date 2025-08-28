@@ -1,15 +1,22 @@
-import React from "react"
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/table"
-import SortHeader from "./SortHeader"
+import React from 'react'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../../components/ui/table'
+import SortHeader from './SortHeader'
 import { formatToBRL, formatToDate } from '@/utils/formaters'
 
-export type Order = "ASC" | "DESC"
+export type Order = 'ASC' | 'DESC'
 export type SortKeyParcela =
-  | "datavencimento"
-  | "valorvencimento"
-  | "totalpago"
-  | "capitalaberto"
-  | "createdAt"
+  | 'datavencimento'
+  | 'valorvencimento'
+  | 'totalpago'
+  | 'capitalaberto'
+  | 'createdAt'
 
 export type Parcela = {
   datavencimento: string
@@ -25,7 +32,6 @@ export default function ParcelasTable({
   total,
   page,
   limit,
-  loading,
   sort,
   order,
   onChangeSort,
@@ -45,17 +51,40 @@ export default function ParcelasTable({
         <TableHeader>
           <TableRow>
             <TableHead>
-              <SortHeader label="Vencimento" active={sort === "datavencimento"} order={order} onSort={() => onChangeSort("datavencimento")} />
+              <SortHeader
+                label="Vencimento"
+                active={sort === 'datavencimento'}
+                order={order}
+                onSort={() => onChangeSort('datavencimento')}
+              />
             </TableHead>
             <TableHead className="text-right">
-              <SortHeader label="Valor" active={sort === "valorvencimento"} order={order} onSort={() => onChangeSort("valorvencimento")} alignRight />
+              <SortHeader
+                label="Valor"
+                active={sort === 'valorvencimento'}
+                order={order}
+                onSort={() => onChangeSort('valorvencimento')}
+                alignRight
+              />
             </TableHead>
             <TableHead>Último pagamento</TableHead>
             <TableHead className="text-right">
-              <SortHeader label="Total pago" active={sort === "totalpago"} order={order} onSort={() => onChangeSort("totalpago")} alignRight />
+              <SortHeader
+                label="Total pago"
+                active={sort === 'totalpago'}
+                order={order}
+                onSort={() => onChangeSort('totalpago')}
+                alignRight
+              />
             </TableHead>
             <TableHead className="text-right">
-              <SortHeader label="Capital aberto" active={sort === "capitalaberto"} order={order} onSort={() => onChangeSort("capitalaberto")} alignRight />
+              <SortHeader
+                label="Capital aberto"
+                active={sort === 'capitalaberto'}
+                order={order}
+                onSort={() => onChangeSort('capitalaberto')}
+                alignRight
+              />
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -72,7 +101,9 @@ export default function ParcelasTable({
         </TableBody>
       </Table>
       <div className="flex items-center justify-between px-3 py-2 text-sm text-muted-foreground border-t border-border">
-        <span>Página {page} • {Math.max(1, Math.ceil((total ?? 0) / (limit || 10)))} </span>
+        <span>
+          Página {page} • {Math.max(1, Math.ceil((total ?? 0) / (limit || 10)))}{' '}
+        </span>
         <span>{total ?? 0} registro(s)</span>
       </div>
     </div>
