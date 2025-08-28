@@ -1,13 +1,13 @@
 // src/web/contratos/contrato.controller.ts
 import { Controller, Get, Query } from '@nestjs/common';
-import { ListContratosUseCase } from 'src/application/contrato/list-contratos.usecase';
+import { ListContratosUseCase } from '../../application/contrato/list-contratos.usecase';
 import { ListContratosQueryDto } from './contrato.dto';
 import {
   presentContrato,
   presentEndividamentoTotal,
   EndividamentoTotalResponseDto,
 } from './contrato.presenter';
-import { GetEndividamentoTotalUseCase } from 'src/application/contrato/get-endividamento-total.usecase';
+import { GetEndividamentoTotalUseCase } from '../../application/contrato/get-endividamento-total.usecase';
 
 @Controller('contratos')
 export class ContratoController {
