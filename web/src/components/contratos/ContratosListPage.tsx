@@ -7,6 +7,7 @@ import type { ListContratosQuery, SortKey, Order } from '@/api/client'
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import ParcelasModal from '../parcelas/ParcelasModal'
 
+
 export default function ContratosListPage({ endpoint = '/contratos' }: { endpoint?: string }) {
   const [query, setQuery] = React.useState('')
   const [page, setPage] = React.useState(1)
@@ -51,7 +52,7 @@ export default function ContratosListPage({ endpoint = '/contratos' }: { endpoin
   const totalPages = Math.max(1, Math.ceil((total ?? 0) / (limit || 10)))
 
   return (
-    <div className="container mx-auto p-4 md:p-6">
+    <div className="container mx-auto p-4 md:p-6 text-card-foreground">
 
       <div className="space-y-4">
         <ContractsToolbar

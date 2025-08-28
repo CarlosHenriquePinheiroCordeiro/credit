@@ -1708,7 +1708,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:^5.0.0":
+"@types/express@npm:*, @types/express@npm:^5.0.0":
   version: 5.0.3
   resolution: "@types/express@npm:5.0.3"
   dependencies:
@@ -1782,6 +1782,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/multer@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@types/multer@npm:2.0.0"
+  dependencies:
+    "@types/express": "npm:*"
+  checksum: 10c0/375b0e77c4675c2ff27d1170e469df48dced928cc9fcd077ead111a20d0f2c01921fd25e20e25426604d6d3e311b37da2bc03ce47523d06adafba5c4b8077b67
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*":
   version: 24.3.0
   resolution: "@types/node@npm:24.3.0"
@@ -1850,6 +1859,25 @@ __metadata:
   version: 2.0.3
   resolution: "@types/stack-utils@npm:2.0.3"
   checksum: 10c0/1f4658385ae936330581bcb8aa3a066df03867d90281cdf89cc356d404bd6579be0f11902304e1f775d92df22c6dd761d4451c804b0a4fba973e06211e9bd77c
+  languageName: node
+  linkType: hard
+
+"@types/stream-chain@npm:*":
+  version: 2.1.0
+  resolution: "@types/stream-chain@npm:2.1.0"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/b9acf2740068c20defed8a0066040375d7b75ce3f51100b61b888c9425818d92ef794110468350f51109d9c1aa890a645953abe8fcb25a57ee4e86a19559bda4
+  languageName: node
+  linkType: hard
+
+"@types/stream-json@npm:^1":
+  version: 1.7.8
+  resolution: "@types/stream-json@npm:1.7.8"
+  dependencies:
+    "@types/node": "npm:*"
+    "@types/stream-chain": "npm:*"
+  checksum: 10c0/c88f4dca65332d3847b37b16a60dc9d9a7401a6c47b0553e5a424e35f989757afeede32397b1a9ee9c1e5ba4a013832d2938fa60590e2b1dffa848185ac33b93
   languageName: node
   linkType: hard
 
@@ -2566,8 +2594,10 @@ __metadata:
     "@nestjs/typeorm": "npm:^11.0.0"
     "@types/express": "npm:^5.0.0"
     "@types/jest": "npm:^30.0.0"
+    "@types/multer": "npm:^2.0.0"
     "@types/node": "npm:^22.10.7"
     "@types/pg": "npm:^8"
+    "@types/stream-json": "npm:^1"
     "@types/supertest": "npm:^6.0.2"
     class-transformer: "npm:^0.5.1"
     class-validator: "npm:^0.14.2"
@@ -2583,6 +2613,7 @@ __metadata:
     reflect-metadata: "npm:^0.2.2"
     rxjs: "npm:^7.8.1"
     source-map-support: "npm:^0.5.21"
+    stream-json: "npm:^1.9.1"
     supertest: "npm:^7.0.0"
     ts-jest: "npm:^29.2.5"
     ts-loader: "npm:^9.5.2"
@@ -6836,6 +6867,22 @@ __metadata:
   version: 2.0.2
   resolution: "statuses@npm:2.0.2"
   checksum: 10c0/a9947d98ad60d01f6b26727570f3bcceb6c8fa789da64fe6889908fe2e294d57503b14bf2b5af7605c2d36647259e856635cd4c49eab41667658ec9d0080ec3f
+  languageName: node
+  linkType: hard
+
+"stream-chain@npm:^2.2.5":
+  version: 2.2.5
+  resolution: "stream-chain@npm:2.2.5"
+  checksum: 10c0/c512f50190d7c92d688fa64e7af540c51b661f9c2b775fc72bca38ea9bca515c64c22c2197b1be463741daacbaaa2dde8a8ea24ebda46f08391224f15249121a
+  languageName: node
+  linkType: hard
+
+"stream-json@npm:^1.9.1":
+  version: 1.9.1
+  resolution: "stream-json@npm:1.9.1"
+  dependencies:
+    stream-chain: "npm:^2.2.5"
+  checksum: 10c0/0521e5cb3fb6b0e2561d715975e891bd81fa77d0239c8d0b1756846392bc3c7cdd7f1ddb0fe7ed77e6fdef58daab9e665d3b39f7d677bd0859e65a2bff59b92c
   languageName: node
   linkType: hard
 

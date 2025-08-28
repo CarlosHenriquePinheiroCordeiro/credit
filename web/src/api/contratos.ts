@@ -23,3 +23,19 @@ export async function fetchContratos(query: ListContratosQuery, endpoint = '/con
   const { data } = await api.get<ListResponse<Contrato>>(url)
   return data
 }
+
+export async function postMaiorValorAberto(file: File, endpoint = "/maximo-aberto") {
+  const url = `http://localhost:3000/api${endpoint}`
+  const form = new FormData()
+  form.append("file", file)
+  const { data } = await api.post<{ mes: string; total_aberto: number }>(url, form, {
+    headers: { "Content-Type": "multipart/form-data" },
+  })
+  return data
+}
+
+export async function fetchDividaTotal(endpoint = "/contratos/endividamento-total") {
+  const url = `http://localhost:3000/api${endpoint}`
+  const { data } = await api.get<{ endividamento_total: number }>(url)
+  return data
+}

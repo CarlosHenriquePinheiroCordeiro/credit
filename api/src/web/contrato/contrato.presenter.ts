@@ -22,6 +22,11 @@ export function presentContrato(c: Contrato): ContratoHttp {
     createdAt: c.createdAt.toISOString(),
     updatedAt: c.updatedAt.toISOString(),
     qtdParcelas: c.qtdParcelas,
-    totalPago: c.totalPago
+    totalPago: c.totalPago,
   };
 }
+
+export type EndividamentoTotalResponseDto = { endividamento_total: number };
+
+export const presentEndividamentoTotal = (v: EndividamentoTotalResponseDto) =>
+  v;
