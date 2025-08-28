@@ -1,18 +1,37 @@
 # Contratos e Parcelas
 
-Versão do Node: 22.17.1
-Versão do yarn: 4.9.4
-Desenvolvido sobre o sistema operacional Linux Mint 22.1
+- Versão do Node: 22.17.1
+- Versão do yarn: 4.9.4
+- Desenvolvido sobre o sistema operacional Linux Mint 22.1
+- Backend desenvolvido em NestJS com Typescript sobre arquitetura "Clean Architecture", executado sobre ambiente Docker com banco de dados PostgreSQL, usando TypeORM para a comunicação, documentado com Swagger (OpenAPI).
+- Frontend desenvolvido em React com Typescript, usando Vite, tailwindcss, postcss, padrão de system design proposto e componentes do Chadcn. 
 
 ## Como executar os projetos?
 
 ### Backend (api)
 
-1. Após clonar o projeto, navegue até a pasta "api"
+1. Após clonar o projeto, navegue até a pasta "api".
+2. Faça uma cópia do arquivo ".env.example" e renomeie para ".env".
+3. Execute o comando "nvm use", para garantir que a sua versão do node esteja compatível com a versão do projeto.
+4. Execute o comando "yarn install".
+5. Execute o comando "docker compose up" e aguarde o ambiente permanecer em execução estável.
+6. Ainda dentro da pasta "api", execute "yarn typeorm:run". Quando finalizar a execução, execute em seguida "yarn seed".
+7. Agora, sempre que desejar executar o backend, basta somente executar o comando "docker compose up" dentro da pasta "api".
+8. Não deixe de consultar o endpoint "/docs", onde está localizada a documentação Swagger (OpenAPI) do desenvolvido, podendo testar por lá também.
 
-Não deixe de consultar o endpoint "/docs", onde está localizada a documentação Swagger (OpenAPI) do desenvolvido, podendo testar por lá também.
+### Testes automatizados
+
+1. Navegue até a pasta "api".
+2. Para garantir a correta execução, execute "docker compose up".
+3. Para executar os testes unitários, execute o comando "yarn test".
+4. Para executar os testes end-to-end (e2e), execute o comando "yarn test:e2e".
 
 ### Frontend (web)
+
+1. Após clonar o projeto, navegue até a pasta "web".
+2. Execute o comando "nvm use", para garantir que a sua versão do node esteja compatível com a versão do projeto.
+3. Execute o comando "yarn install".
+4. Agora, sempre que desejar executar o frontend, basta somente executar o comando "docker compose up" dentro da pasta "web".
 
 # API Endpoints
 
