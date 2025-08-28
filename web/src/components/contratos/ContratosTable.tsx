@@ -2,13 +2,13 @@ import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
-import { Eye } from 'lucide-react'
+import { Search, Eye } from 'lucide-react'
 import { SortHeader } from './SortHeader'
-import type { Contrato } from '@/api/contratos'
+import { fetchDividaTotal, type Contrato } from '@/api/contratos'
 import type { SortKey, Order } from '@/api/client'
-
-const fmtBRL = (n?: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(n ?? 0)
-const fmtDate = (s?: string) => (s ? new Date(s + (s.endsWith('Z') ? '' : 'T00:00:00')).toLocaleDateString('pt-BR') : '-')
+import { formatToBRL, formatToDate } from '@/utils/formaters'
+import MaiorValorAbertoModal from './MaiorValorAbertoModal'
+import { useMutation } from '@tanstack/react-query'
 
 export function ContractsTable({
   data,
@@ -25,16 +25,23 @@ export function ContractsTable({
   onDetail: (c: Contrato) => void
 }) {
 
+  const [showMaiorValor, setShowMaiorValor] = React.useState(false)
+  const [dividaTotal, setDividaTotal] = React.useState<number | null>(null)
+  const dividaMutation = useMutation({
+    mutationFn: () => fetchDividaTotal("/contratos/endividamento-total"),
+    onSuccess: ({ endividamento_total }) => setDividaTotal(endividamento_total),
+  })
+
   const rows = data.map((c) => {
     return (
       <TableRow key={c.contrato} className="hover:bg-muted/50">
         <TableCell className="font-medium">{c.contrato}</TableCell>
-        <TableCell>{fmtDate(c.data)}</TableCell>
-        <TableCell className="text-right">{fmtBRL(c.valortotal)}</TableCell>
-        <TableCell className="text-right">{fmtBRL(c.valorentrada)}</TableCell>
-        <TableCell className="text-right">{fmtBRL(c.valorfinanciado ?? (c.valortotal - (c.valorentrada ?? 0)))}</TableCell>
+        <TableCell>{formatToDate(c.data)}</TableCell>
+        <TableCell className="text-right">{formatToBRL(c.valortotal)}</TableCell>
+        <TableCell className="text-right">{formatToBRL(c.valorentrada)}</TableCell>
+        <TableCell className="text-right">{formatToBRL(c.valorfinanciado ?? (c.valortotal - (c.valorentrada ?? 0)))}</TableCell>
         <TableCell className="text-center">{c.qtdParcelas}</TableCell>
-        <TableCell className="text-right">{fmtBRL(c.totalPago)}</TableCell>
+        <TableCell className="text-right">{formatToBRL(c.totalPago)}</TableCell>
         <TableCell className="text-right">
           <Button size="sm" onClick={() => onDetail(c)}>
             <Eye className="h-4 w-4 mr-1" /> Detalhar parcelas
@@ -47,6 +54,34 @@ export function ContractsTable({
   return (
     <Card className="rounded-2xl">
       <CardContent className="space-y-4 pt-6">
+      <div className="flex flex-wrap items-center gap-3">
+          <Button onClick={() => setShowMaiorValor(true)} className="inline-flex items-center gap-2">
+            <Search className="h-4 w-4" />
+            Período de Maior Valor Aberto
+          </Button>
+
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => dividaMutation.mutate()}
+              disabled={dividaMutation.isPending}
+              className="inline-flex items-center gap-2"
+            >
+              <Search className="h-4 w-4" />
+              Dívida Total: 
+            </Button>
+
+            {dividaTotal !== null && (
+              <span className="text-sm font-medium">
+                {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(dividaTotal)}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <MaiorValorAbertoModal
+          open={showMaiorValor}
+          onOpenChange={setShowMaiorValor}
+        />
         <div className="hidden md:block">
           <Table>
             <TableHeader>
@@ -89,17 +124,17 @@ export function ContractsTable({
                 </CardHeader>
                 <CardContent className="grid grid-cols-2 gap-2 text-sm">
                   <span className="opacity-60">Data</span>
-                  <span className="text-right">{fmtDate(c.data)}</span>
+                  <span className="text-right">{formatToDate(c.data)}</span>
                   <span className="opacity-60">Valor total</span>
-                  <span className="text-right">{fmtBRL(c.valortotal)}</span>
+                  <span className="text-right">{formatToBRL(c.valortotal)}</span>
                   <span className="opacity-60">Entrada</span>
-                  <span className="text-right">{fmtBRL(c.valorentrada)}</span>
+                  <span className="text-right">{formatToBRL(c.valorentrada)}</span>
                   <span className="opacity-60">Financiado</span>
-                  <span className="text-right">{fmtBRL(c.valorfinanciado ?? (c.valortotal - (c.valorentrada ?? 0)))}</span>
+                  <span className="text-right">{formatToBRL(c.valorfinanciado ?? (c.valortotal - (c.valorentrada ?? 0)))}</span>
                   <span className="opacity-60">Parcelas</span>
                   <span className="text-right">{c.qtdParcelas}</span>
                   <span className="opacity-60">Total pago</span>
-                  <span className="text-right">{fmtBRL(c.totalPago)}</span>
+                  <span className="text-right">{formatToBRL(c.totalPago)}</span>
                 </CardContent>
               </Card>
             )

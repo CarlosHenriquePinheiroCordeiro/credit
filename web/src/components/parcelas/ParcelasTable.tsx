@@ -1,9 +1,7 @@
 import React from "react"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/table"
 import SortHeader from "./SortHeader"
-
-const fmtBRL = (n?: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(n ?? 0)
-const fmtDate = (s?: string) => (s ? new Date(s + (s.endsWith("Z") ? "" : "T00:00:00")).toLocaleDateString("pt-BR") : "-")
+import { formatToBRL, formatToDate } from '@/utils/formaters'
 
 export type Order = "ASC" | "DESC"
 export type SortKeyParcela =
@@ -64,11 +62,11 @@ export default function ParcelasTable({
         <TableBody>
           {data.map((p, idx) => (
             <TableRow key={idx} className="hover:bg-muted/50">
-              <TableCell>{fmtDate(p.datavencimento)}</TableCell>
-              <TableCell className="text-right">{fmtBRL(p.valorvencimento)}</TableCell>
-              <TableCell>{fmtDate(p.dataultimopagamento ?? undefined)}</TableCell>
-              <TableCell className="text-right">{fmtBRL(p.totalpago)}</TableCell>
-              <TableCell className="text-right">{fmtBRL(p.capitalaberto)}</TableCell>
+              <TableCell>{formatToDate(p.datavencimento)}</TableCell>
+              <TableCell className="text-right">{formatToBRL(p.valorvencimento)}</TableCell>
+              <TableCell>{formatToDate(p.dataultimopagamento ?? undefined)}</TableCell>
+              <TableCell className="text-right">{formatToBRL(p.totalpago)}</TableCell>
+              <TableCell className="text-right">{formatToBRL(p.capitalaberto)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

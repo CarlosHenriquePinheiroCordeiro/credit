@@ -1,3 +1,6 @@
+// src/infra/db/typeorm/repositories/parcela.typeorm.repository.ts
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -27,10 +30,8 @@ export class ParcelaTypeOrmRepository implements IParcelaRepository {
 
     qb.where('p.contratoId = :contratoId', { contratoId: filter.contratoId });
 
-    if (filter.vencFrom)
-      qb.andWhere('p.datavencimento >= :vFrom', { vFrom: filter.vencFrom });
-    if (filter.vencTo)
-      qb.andWhere('p.datavencimento <= :vTo', { vTo: filter.vencTo });
+    if (filter.vencFrom) qb.andWhere('p.datavencimento >= :vFrom', { vFrom: filter.vencFrom });
+    if (filter.vencTo) qb.andWhere('p.datavencimento <= :vTo', { vTo: filter.vencTo });
 
     if (filter.hasPayment === true) qb.andWhere('p.totalpago > 0');
     if (filter.hasPayment === false) qb.andWhere('p.totalpago = 0');
@@ -64,5 +65,13 @@ export class ParcelaTypeOrmRepository implements IParcelaRepository {
     const items = rows.map(ParcelaMapper.toDomain);
 
     return { items, total, page, limit };
+  }
+
+  async sumCapitalAberto(): Promise<number> {
+    const row = await this.repo
+      .createQueryBuilder('p')
+      .select('COALESCE(SUM(p.capitalaberto), 0)', 'total')
+      .getRawOne<{ total: string }>();
+    return Number(row?.total ?? 0);
   }
 }

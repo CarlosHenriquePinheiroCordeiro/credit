@@ -34,4 +34,5 @@ export interface IParcelaRepository {
     filter: ListParcelasFilter,
     pagination: Pagination,
   ): Promise<Paginated<Parcela>>;
+  sumCapitalAberto(): Promise<number>;
 }
