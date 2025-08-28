@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CONTRATO_REPOSITORY } from 'src/domain/contrato/contrato.repository';
+import { CONTRATO_REPOSITORY } from '../../domain/contrato/contrato.repository';
 import { ListContratosOutput } from './dto/list-contratos.output';
 import { ListContratosInput } from './dto/list-contratos.input';
-import type { IContratoRepository } from 'src/domain/contrato/contrato.repository';
+import type { IContratoRepository } from '../../domain/contrato/contrato.repository';
 
 @Injectable()
 export class ListContratosUseCase {
